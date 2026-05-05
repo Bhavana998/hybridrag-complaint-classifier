@@ -1,0 +1,51 @@
+id,complaint,category,priority,date,source,sentiment,customer_id,region
+1,I was charged twice for my subscription of $49.99. Please refund the duplicate charge.,Billing,Medium,2026-05-05,sample_data,positive,CUST4298,ASIA
+2,I was charged twice for my subscription of $49.99. Please refund the duplicate charge.,Billing,Medium,2026-05-05,sample_data,positive,CUST7867,ASIA
+3,I cannot log into my account. The password reset email never arrives.,Account,Medium,2026-05-05,sample_data,negative,CUST7911,US
+4,The watch application crashes every time I try to make a payment. This is very frustrating.,Billing,Medium,2026-05-05,sample_data,positive,CUST8630,EU
+5,Why was I charged a $50 late fee? I paid my bill on time.,Billing,Medium,2026-05-05,sample_data,negative,CUST9632,US
+6,I cannot log into my account. The password reset email never arrives.,Account,Medium,2026-05-05,sample_data,neutral,CUST2958,US
+7,I was charged twice for my subscription of $29.99. Please refund the duplicate charge.,Billing,Medium,2026-05-05,sample_data,neutral,CUST8781,UK
+8,I've been on hold for 94 minutes. No one is answering.,Customer Service,Medium,2026-05-05,sample_data,positive,CUST9043,EU
+9,I've been on hold for 92 minutes. No one is answering.,Customer Service,Medium,2026-05-05,sample_data,positive,CUST6064,UK
+10,Customer support was extremely rude and disconnected the call after 110 minutes.,Customer Service,Medium,2026-05-05,sample_data,negative,CUST3865,UK
+11,The website keeps timing out when I try to checkout my shopping cart.,Technical,Medium,2026-05-05,sample_data,positive,CUST2862,EU
+12,Customer support was extremely rude and disconnected the call after 83 minutes.,Customer Service,Medium,2026-05-05,sample_data,neutral,CUST8162,ASIA
+13,The product arrived damaged. The box was crushed and contents broken.,Shipping,Medium,2026-05-05,sample_data,neutral,CUST8603,EU
+14,Customer support was extremely rude and disconnected the call after 28 minutes.,Customer Service,Medium,2026-05-05,sample_data,neutral,CUST9539,EU
+15,The app update broke everything. Now nothing works.,Technical,Medium,2026-05-05,sample_data,positive,CUST9142,UK
+16,Driver delivered my package to the wrong address. I provided correct address.,Shipping,Medium,2026-05-05,sample_data,neutral,CUST5562,UK
+17,The phone application crashes every time I try to make a payment. This is very frustrating.,Billing,Medium,2026-05-05,sample_data,negative,CUST3355,ASIA
+18,The app update broke everything. Now nothing works.,Technical,Medium,2026-05-05,sample_data,positive,CUST2051,OTHER
+19,The product arrived damaged. The box was crushed and contents broken.,Shipping,Medium,2026-05-05,sample_data,negative,CUST5371,EU
+20,Driver delivered my package to the wrong address. I provided correct address.,Shipping,Medium,2026-05-05,sample_data,positive,CUST1698,UK
+21,Driver delivered my package to the wrong address. I provided correct address.,Shipping,Medium,2026-05-05,sample_data,positive,CUST3506,EU
+22,The product quality is terrible. It fell apart after first use.,Product Quality,Medium,2026-05-05,sample_data,positive,CUST7029,OTHER
+23,Driver delivered my package to the wrong address. I provided correct address.,Shipping,Medium,2026-05-05,sample_data,negative,CUST7736,US
+24,The product quality is terrible. It fell apart after first use.,Product Quality,Medium,2026-05-05,sample_data,positive,CUST9593,US
+25,The app update broke everything. Now nothing works.,Technical,Medium,2026-05-05,sample_data,negative,CUST2547,UK
+26,My account was hacked. Unauthorized purchases were made.,Account,High,2026-05-05,sample_data,positive,CUST3184,EU
+27,I cannot log into my account. The password reset email never arrives.,Account,Medium,2026-05-05,sample_data,negative,CUST8752,ASIA
+28,The headphones stopped working after only 7 days of use. Very poor quality.,Product Quality,Medium,2026-05-05,sample_data,neutral,CUST4773,EU
+29,The app update broke everything. Now nothing works.,Technical,Medium,2026-05-05,sample_data,negative,CUST4122,US
+30,I returned an item 1 weeks ago. Still no refund.,Billing,Medium,2026-05-05,sample_data,neutral,CUST3658,OTHER
+31,The laptop stopped working after only 2 days of use. Very poor quality.,Product Quality,Medium,2026-05-05,sample_data,negative,CUST3303,UK
+32,My package was supposed to arrive 11 days ago but tracking shows it's still stuck.,Shipping,Medium,2026-05-05,sample_data,neutral,CUST8732,US
+33,Driver delivered my package to the wrong address. I provided correct address.,Shipping,Medium,2026-05-05,sample_data,neutral,CUST7746,OTHER
+34,Why was I charged a $75 late fee? I paid my bill on time.,Billing,Medium,2026-05-05,sample_data,negative,CUST7891,US
+35,I cannot log into my account. The password reset email never arrives.,Account,Medium,2026-05-05,sample_data,neutral,CUST5681,US
+36,The website keeps timing out when I try to checkout my shopping cart.,Technical,Medium,2026-05-05,sample_data,positive,CUST6938,UK
+37,Customer support was extremely rude and disconnected the call after 45 minutes.,Customer Service,Medium,2026-05-05,sample_data,neutral,CUST3225,ASIA
+38,The phone application crashes every time I try to view orders. This is very frustrating.,Technical,Medium,2026-05-05,sample_data,positive,CUST8777,UK
+39,The watch stopped working after only 9 days of use. Very poor quality.,Product Quality,Medium,2026-05-05,sample_data,negative,CUST1038,UK
+40,My package was supposed to arrive 2 days ago but tracking shows it's still stuck.,Shipping,Medium,2026-05-05,sample_data,neutral,CUST8187,US
+41,The website keeps timing out when I try to checkout my shopping cart.,Technical,Medium,2026-05-05,sample_data,positive,CUST3026,US
+42,Customer support was extremely rude and disconnected the call after 28 minutes.,Customer Service,Medium,2026-05-05,sample_data,neutral,CUST4813,US
+43,Customer support was extremely rude and disconnected the call after 30 minutes.,Customer Service,Medium,2026-05-05,sample_data,neutral,CUST9581,OTHER
+44,I returned an item 4 weeks ago. Still no refund.,Billing,Medium,2026-05-05,sample_data,negative,CUST8056,US
+45,The headphones application crashes every time I try to upload a photo. This is very frustrating.,Technical,Medium,2026-05-05,sample_data,positive,CUST4223,OTHER
+46,I've been on hold for 114 minutes. No one is answering.,Customer Service,Medium,2026-05-05,sample_data,neutral,CUST2061,US
+47,Driver delivered my package to the wrong address. I provided correct address.,Shipping,Medium,2026-05-05,sample_data,negative,CUST5619,OTHER
+48,I was charged twice for my subscription of $29.99. Please refund the duplicate charge.,Billing,Medium,2026-05-05,sample_data,negative,CUST9109,OTHER
+49,Why was I charged a $25 late fee? I paid my bill on time.,Billing,Medium,2026-05-05,sample_data,neutral,CUST5191,UK
+50,I returned an item 3 weeks ago. Still no refund.,Billing,Medium,2026-05-05,sample_data,positive,CUST5835,ASIA
