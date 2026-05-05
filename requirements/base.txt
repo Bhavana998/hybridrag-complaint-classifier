@@ -6,3 +6,5 @@ pandas
 numpy
 sentence-transformers
 python-dotenv
+SpeechRecognition
+pyaudio

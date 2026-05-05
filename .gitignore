@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Environment variables (IMPORTANT - don't commit your API key!)
+.env
+.streamlit/secrets.toml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data files
+data/indexes/
+data/processed/
+*.db
+*.sqlite
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Voice recognition temp files
+*.wav
+*.mp3
+
+# Streamlit
+.streamlit/cache/

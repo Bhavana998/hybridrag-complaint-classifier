@@ -1,4 +1,4 @@
-# app/main.py - Complete Working Version with Groq API
+# app/main.py - Complete Version with Working Voice Search
 import sys
 import os
 from pathlib import Path
@@ -18,16 +18,17 @@ from datetime import datetime
 from core.groq_classifier import ComplaintClassifier
 from core.hybrid_retriever import HybridRetriever
 from core.data_loader import DataLoader
+from core.voice_search import VoiceSearch
 
 # Page configuration - MUST BE FIRST STREAMLIT COMMAND
 st.set_page_config(
-    page_title="HybridRAG - Groq AI Complaint Analysis",
-    page_icon="🚀",
+    page_title="HybridRAG - Voice Enabled Complaint Analysis",
+    page_icon="🎤",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Modern Custom CSS
+# Modern Custom CSS with Voice Search Styling
 st.markdown("""
 <style>
     /* Modern gradient background */
@@ -122,6 +123,18 @@ st.markdown("""
         cursor: not-allowed;
     }
     
+    /* Voice button special styling */
+    .voice-button {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
     /* Success message */
     .stAlert {
         border-radius: 10px;
@@ -136,6 +149,15 @@ st.markdown("""
         font-size: 0.75rem;
         display: inline-block;
         margin-left: 0.5rem;
+    }
+    
+    /* Voice input container */
+    .voice-container {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin: 10px 0;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -155,13 +177,20 @@ if 'api_key_set' not in st.session_state:
     st.session_state.api_key_set = False
 if 'current_results' not in st.session_state:
     st.session_state.current_results = None
+if 'complaint_text' not in st.session_state:
+    st.session_state.complaint_text = ""
+if 'voice_text' not in st.session_state:
+    st.session_state.voice_text = ""
+
+# Initialize voice search
+voice_search = VoiceSearch()
 
 # Modern Header
 st.markdown("""
 <div class="modern-header">
-    <h1>🚀 HybridRAG Intelligence Platform</h1>
-    <p>Groq AI-Powered Customer Complaint Analysis with Hybrid Search + AI Classification</p>
-    <p><span class="free-badge">⚡ FREE TIER</span> <span class="free-badge">🎯 30 requests/min</span> <span class="free-badge">💰 No Credit Card</span></p>
+    <h1>🎤 HybridRAG Intelligence Platform</h1>
+    <p>Voice-Enabled Customer Complaint Analysis with Groq AI + Hybrid Search</p>
+    <p><span class="free-badge">⚡ FREE TIER</span> <span class="free-badge">🎤 Voice Search</span> <span class="free-badge">💰 No Credit Card</span></p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -225,6 +254,13 @@ with st.sidebar:
     
     st.markdown("---")
     
+    # Voice Settings
+    st.markdown("### 🎤 Voice Settings")
+    st.info("💡 Click 'Start Speaking' and say your complaint clearly")
+    st.caption("🎤 Works best in Chrome or Edge browser")
+    
+    st.markdown("---")
+    
     # Data Management
     st.markdown("### 📁 Data Source")
     
@@ -271,6 +307,7 @@ with st.sidebar:
             st.session_state.data_loaded = False
             st.session_state.history = []
             st.session_state.current_results = None
+            st.session_state.complaint_text = ""
             st.success("Data cleared!")
             st.rerun()
     
@@ -319,83 +356,133 @@ with col1:
         💡 **Free tier includes:** 30 requests/minute, 6,000-12,000 tokens/minute
         """)
     
-    complaint_text = st.text_area(
-        "",
-        height=200,
-        placeholder="✍️ Type or paste customer complaint here...\n\nExample: 'I was charged twice for my monthly subscription. Please refund the extra $50 charge immediately!'",
-        label_visibility="collapsed",
-        disabled=not st.session_state.api_key_set
+    # Voice Input Section
+    st.markdown("#### 🎤 Voice Input")
+    st.caption("Click the button below, speak your complaint clearly, then click 'Use Voice Text'")
+    
+    # Voice HTML component
+    voice_html = voice_search.get_voice_html()
+    st.components.v1.html(voice_html, height=120)
+    
+    # Voice result field
+    voice_result = st.text_input(
+        "Voice Result:", 
+        key="voice_result_field", 
+        placeholder="Your spoken text will appear here after speaking...",
+        label_visibility="collapsed"
     )
     
-    # Example prompts
+    if voice_result:
+        st.session_state.voice_text = voice_result
+        st.success(f"🎤 Voice captured: {voice_result[:100]}...")
+        
+        # Button to use voice text
+        if st.button("📝 Use This Voice Text", use_container_width=True):
+            st.session_state.complaint_text = voice_result
+            st.rerun()
+    
+    st.markdown("---")
+    
+    # Text Input Section
+    st.markdown("#### ✍️ Or Type Your Complaint")
+    
+    complaint_text = st.text_area(
+        "",
+        value=st.session_state.complaint_text,
+        height=150,
+        placeholder="✍️ Type your complaint here or use voice input above...\n\nExample: 'I was charged twice for my subscription. Please refund me.'",
+        label_visibility="collapsed",
+        disabled=not st.session_state.api_key_set,
+        key="complaint_text_area"
+    )
+    
+    # Update session state when typing
+    if complaint_text:
+        st.session_state.complaint_text = complaint_text
+    
+    # Quick Examples
     st.markdown("**Quick Examples:**")
     example_cols = st.columns(3)
     examples = [
-        ("💳 Billing issue", "I was charged twice for my monthly subscription of $49.99. Please refund the duplicate charge immediately!"),
-        ("🔧 Technical problem", "The mobile app crashes every time I try to upload a photo. I've reinstalled 3 times."),
-        ("📦 Shipping delay", "My package shows delivered but it's not at my door. The tracking hasn't updated in 5 days.")
+        ("💳 Billing", "I was charged twice for my monthly subscription of $49.99. Please refund the duplicate charge immediately!"),
+        ("🔧 Technical", "The mobile app crashes every time I try to upload a photo. I've reinstalled 3 times."),
+        ("📦 Shipping", "My package shows delivered but it's not at my door. The tracking hasn't updated in 5 days.")
     ]
     
     for idx, (label, text) in enumerate(examples):
         with example_cols[idx]:
             if st.button(label, key=f"ex_{idx}", use_container_width=True, disabled=not st.session_state.api_key_set):
-                complaint_text = text
+                st.session_state.complaint_text = text
                 st.rerun()
     
-    # Classify button
+    # Analyze and Clear buttons
     col_btn1, col_btn2 = st.columns([3, 1])
+    
     with col_btn1:
-        classify_button = st.button(
+        analyze_clicked = st.button(
             "🚀 Analyze Complaint",
             type="primary",
             use_container_width=True,
-            disabled=not (complaint_text and st.session_state.data_loaded and st.session_state.api_key_set)
+            disabled=not (st.session_state.complaint_text and st.session_state.data_loaded and st.session_state.api_key_set)
         )
     
     with col_btn2:
         if st.button("🗑️ Clear", use_container_width=True):
-            complaint_text = ""
+            st.session_state.complaint_text = ""
+            st.session_state.voice_text = ""
+            st.session_state.current_results = None
             st.rerun()
     
-    if classify_button and complaint_text and st.session_state.data_loaded:
-        with st.spinner("🔄 Processing complaint through Groq AI + Hybrid Search..."):
-            start_time = time.time()
-            
-            try:
-                # Hybrid retrieval
-                similar_complaints = st.session_state.retriever.hybrid_search(
-                    complaint_text, top_k=top_k, alpha=alpha
-                )
+    # Process classification
+    if analyze_clicked:
+        complaint_to_analyze = st.session_state.complaint_text
+        
+        if complaint_to_analyze:
+            with st.spinner("🔄 Processing complaint through Groq AI + Hybrid Search..."):
+                start_time = time.time()
                 
-                contexts = [result.text for result in similar_complaints]
-                
-                # Groq classification
-                classification = st.session_state.classifier.classify(complaint_text, contexts)
-                
-                processing_time = time.time() - start_time
-                
-                # Store in history
-                st.session_state.history.append({
-                    'timestamp': datetime.now(),
-                    'complaint': complaint_text[:100],
-                    'classification': classification,
-                    'processing_time': processing_time
-                })
-                st.session_state.processed_count += 1
-                
-                # Store current results
-                st.session_state.current_results = {
-                    'similar_complaints': similar_complaints,
-                    'classification': classification,
-                    'processing_time': processing_time,
-                    'complaint': complaint_text
-                }
-                
-                st.rerun()
-                
-            except Exception as e:
-                st.error(f"Classification error: {str(e)}")
-                st.info("Please check your Groq API key and try again")
+                try:
+                    # Hybrid retrieval
+                    similar_complaints = st.session_state.retriever.hybrid_search(
+                        complaint_to_analyze, top_k=top_k, alpha=alpha
+                    )
+                    
+                    contexts = [result.text for result in similar_complaints]
+                    
+                    # Groq classification
+                    classification = st.session_state.classifier.classify(complaint_to_analyze, contexts)
+                    
+                    processing_time = time.time() - start_time
+                    
+                    # Determine input method
+                    input_method = "voice" if st.session_state.voice_text else "text"
+                    
+                    # Store in history
+                    st.session_state.history.append({
+                        'timestamp': datetime.now(),
+                        'complaint': complaint_to_analyze[:100],
+                        'classification': classification,
+                        'processing_time': processing_time,
+                        'input_method': input_method
+                    })
+                    st.session_state.processed_count += 1
+                    
+                    # Clear voice text after use
+                    st.session_state.voice_text = ""
+                    
+                    # Store current results
+                    st.session_state.current_results = {
+                        'similar_complaints': similar_complaints,
+                        'classification': classification,
+                        'processing_time': processing_time,
+                        'complaint': complaint_to_analyze
+                    }
+                    
+                    st.rerun()
+                    
+                except Exception as e:
+                    st.error(f"Classification error: {str(e)}")
+                    st.info("Please check your Groq API key and try again")
 
 with col2:
     st.markdown("### 📊 Analysis Results")
@@ -487,27 +574,29 @@ with col2:
                     """)
     
     else:
-        st.info("✨ Ready for analysis! Enter your Groq API key, load data, and enter a complaint to see results here.")
+        st.info("✨ Ready for analysis! Enter your Groq API key, load data, and enter/speak a complaint to see results here.")
         
-        with st.expander("📖 How Groq-Powered HybridRAG Works"):
+        with st.expander("📖 How Voice-Enabled HybridRAG Works"):
             st.markdown("""
-            **4-Step Pipeline with Groq AI:**
-            1. 🔍 **Hybrid Search** - FAISS (semantic) + TF-IDF (keyword)
-            2. 📚 **Context Retrieval** - Finds similar past complaints
-            3. 🚀 **Groq AI Classification** - Ultra-fast LLM analysis
-            4. 📊 **Structured JSON Output** - Returns actionable insights
+            **4-Step Pipeline with Voice Input:**
+            1. 🎤 **Voice Input** - Speak your complaint (or type)
+            2. 🔍 **Hybrid Search** - FAISS (semantic) + TF-IDF (keyword)
+            3. 📚 **Context Retrieval** - Finds similar past complaints
+            4. 🚀 **Groq AI Classification** - Ultra-fast LLM analysis
+            5. 📊 **Structured JSON Output** - Returns actionable insights
             
-            **Why Groq + Hybrid Search:**
-            - ✅ **Free tier** - 30 requests/minute, no credit card
-            - ✅ **Ultra-fast** - Up to 1,300 tokens/second
-            - ✅ **High accuracy** with Llama 3.1 model
-            - ✅ **Privacy-focused** - Your data stays secure
+            **Voice Features (Browser-based):**
+            - 🎤 Click "Start Speaking" button
+            - 🌍 Works in Chrome, Edge, and modern browsers
+            - 📝 Edit transcribed text before analysis
+            - ✅ No installation required!
             
             **To get started:**
             1. Get a free API key from [console.groq.com](https://console.groq.com)
             2. Enter your key in the sidebar
             3. Click "Load Sample Data"
-            4. Enter a complaint and click "Analyze"
+            4. Speak or type a complaint
+            5. Click "Analyze Complaint"
             """)
 
 # History section at bottom
@@ -518,9 +607,11 @@ if st.session_state.history and len(st.session_state.history) > 0:
     history_data = []
     for h in st.session_state.history[-5:]:
         if 'classification' in h and h['classification']:
+            input_icon = "🎤" if h.get('input_method') == 'voice' else "✍️"
             history_data.append({
                 'Time': h['timestamp'].strftime("%H:%M:%S"),
-                'Complaint': h['complaint'][:60] + "...",
+                'Input': input_icon,
+                'Complaint': h['complaint'][:50] + "...",
                 'Category': h['classification'].get('primary_category', 'N/A'),
                 'Confidence': f"{h['classification'].get('confidence_score', 0):.0%}",
                 'Urgency': h['classification'].get('urgency_level', 'N/A'),
@@ -534,4 +625,5 @@ if st.session_state.history and len(st.session_state.history) > 0:
     if st.button("Clear History"):
         st.session_state.history = []
         st.session_state.current_results = None
+        st.session_state.complaint_text = ""
         st.rerun()
