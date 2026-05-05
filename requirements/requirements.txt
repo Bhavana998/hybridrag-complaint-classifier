@@ -1,7 +1,0 @@
-pyaudistreamlit
-groq
-faiss-cpu
-scikit-learn
-pandas
-numpysentence-transformers
-python-dotenv
