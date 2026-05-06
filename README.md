@@ -207,6 +207,7 @@ FAISS for vector search
 Streamlit for the amazing framework
 
 📧 Contact
+Bhavana
 GitHub: @Bhavana998
 mail: bhavanasetty95@gmail.com
 
