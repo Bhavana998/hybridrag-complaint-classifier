@@ -1,11 +1,11 @@
-# 🎤 HybridRAG - Voice-Enabled Customer Complaint Classification System
-
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
 [![Groq](https://img.shields.io/badge/Groq-FF6B6B?logo=groq&logoColor=white)](https://groq.com)
 [![FAISS](https://img.shields.io/badge/FAISS-0052CC?logo=facebook&logoColor=white)](https://github.com/facebookresearch/faiss)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Streamlit_Cloud-FF4B4B)](https://bhavana998-hybridrag-complaint-classifier-appmain-hxtoo7.streamlit.app)
+
+# 🎤 HybridRAG - Voice-Enabled Customer Complaint Classification System
 
 ## 🎯 Live Demo
 
@@ -64,6 +64,12 @@ text
 
 **Step 6: Display Results**
 → Streamlit UI shows classification to user
+
+## Input Image
+![Input Image](images/input_image.png)
+
+## Output Image
+![Output Image](images/output_image.png)
 
 ## 🚀 Quick Start
 
