@@ -120,14 +120,18 @@ hybridrag-complaint-classifier/
 ├── requirements.txt
 ├── .env
 └── README.md
+
 📊 Performance Metrics
+
 Metric	Value
 Accuracy	95% confidence
 Response Time	~0.72 seconds
 Categories	7 complaint types
 Rate Limit	30 requests/minute (free tier)
 Cost	Free (Groq free tier)
+
 📸 Sample Output
+
 Input:
 
 text
@@ -153,22 +157,25 @@ LLM	Groq (Llama 3.1 8B)
 Voice Recognition	Web Speech API (browser-based)
 Embeddings	Sentence Transformers (all-MiniLM-L6-v2)
 Data Processing	Pandas, NumPy
+
 🌐 Deployment
 Live Demo
 URL: https://bhavana998-hybridrag-complaint-classifier-appmain-hxtoo7.streamlit.app
-
 Supported Platforms
 Platform	Instructions
 Streamlit Cloud	Connect GitHub repo, set secrets
 Render	Use railway.json config
 Railway	Auto-detects Python app
 Hugging Face	Native Streamlit support
+
 🛠️ Troubleshooting
+
 Issue	Solution
 Module not found	Run pip install -r requirements.txt
 API key error	Set GROQ_API_KEY in .env or Streamlit secrets
 Voice not working	Use Chrome or Edge browser
 Port error	Use --server.port $PORT for cloud deployment
+
 📈 Future Improvements
 Add unit tests
 
