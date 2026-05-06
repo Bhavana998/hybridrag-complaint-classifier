@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Streamlit_Cloud-FF4B4B)](https://bhavana998-hybridrag-complaint-classifier-appmain-hxtoo7.streamlit.app)
 
-## 🎯 Live Demo
+# 🎯 Live Demo
 
 **Try it now:** [https://bhavana998-hybridrag-complaint-classifier-appmain-hxtoo7.streamlit.app](https://bhavana998-hybridrag-complaint-classifier-appmain-hxtoo7.streamlit.app)
 
